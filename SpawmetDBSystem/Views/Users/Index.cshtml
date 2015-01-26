@@ -1,0 +1,16 @@
+﻿@model IEnumerable<SpawmetDBSystem.Models.User>
+
+@{
+    ViewBag.Title = "Użytkownicy";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<h2>UŻYTKOWNICY</h2>
+
+@foreach (var user in Model)
+{
+    <p>@Html.DisplayFor(u => user.Login)</p>
+    <p>@Html.DisplayFor(u => user.Password)</p>
+    @* line below needs enabled MARS by adding parameter MultipleActiveResultSets=True in connectionString *@
+    <p>@Html.DisplayFor(u => user.UserGroup.Name)</p>
+}
