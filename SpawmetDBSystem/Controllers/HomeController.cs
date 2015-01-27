@@ -13,6 +13,10 @@ namespace SpawmetDBSystem.Controllers
 
         public ActionResult Index()
         {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             return View();
         }
 

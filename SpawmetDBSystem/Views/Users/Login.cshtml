@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Logowanie";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<style>
+#login-form {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-input {
+    color: white;
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    padding: 5px 10px 5px 10px;
+    border: none;
+    background-color: #111111;
+    font-size: 24px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.login-submit {
+    color: white;
+    width: 60%;
+    height: 40px;
+    margin-top: 20px;
+    padding: 5px 10px 5px 10px;
+    border: none;
+    background-color: #212121;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.login-submit:hover {
+    background-color: #414141;
+}
+</style>
+
+<h2>LOGOWANIE</h2>
+
+<form action="/Users/LoginResult/" method="POST" id="login-form">
+    <div>
+        <input type="text" name="login" class="login-input" />
+    </div>
+    <div>
+        <input type="password" name="password" class="login-input"/>
+    </div>
+    <input type="submit" value="ZALOGUJ" class="login-submit" />
+</form>

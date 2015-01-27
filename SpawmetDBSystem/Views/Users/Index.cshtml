@@ -5,12 +5,44 @@
     Layout = "~/Views/Layouts/Plain.cshtml";
 }
 
-<h2>UŻYTKOWNICY</h2>
+<style>
 
-@foreach (var user in Model)
-{
-    <p>@Html.DisplayFor(u => user.Login)</p>
-    <p>@Html.DisplayFor(u => user.Password)</p>
-    @* line below needs enabled MARS by adding parameter MultipleActiveResultSets=True in connectionString *@
-    <p>@Html.DisplayFor(u => user.UserGroup.Name)</p>
-}
+</style>
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-create-button" class="nav-bar-button">+</button>
+    <button id="nav-bar-title">Użytkownicy</button>
+</div>
+
+<table class="db-table">
+    <tr class="db-table-header">
+        <td class="db-table-header-name">Login</td>
+        <td class="db-table-header-name">Hasło</td>
+        <td class="db-table-header-name">Grupa</td>
+    </tr>
+    @{
+        int i = 0;
+        foreach (var user in Model)
+        {
+            string colorClassName = (i++ % 2) == 0 ? "db-table-bright" : "db-table-dark";
+            <tr class="db-table-column @colorClassName">
+                <td class="db-table-record">@Html.DisplayFor(u => user.Login)</td>
+                <td class="db-table-record">@Html.DisplayFor(u => user.Password)</td>
+                <td class="db-table-record">@Html.DisplayFor(u => user.UserGroup.Name)</td>
+            </tr>
+        }
+    }
+</table>
+
+<script>
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function () {
+            window.location = "/Home/";
+        });
+
+        $(".db-table-column").click(function() {
+            $(this).addClass("db-table-column-selected");
+        });
+    });
+</script>

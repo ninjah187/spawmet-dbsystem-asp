@@ -17,8 +17,38 @@ namespace SpawmetDBSystem.Controllers
 
         public ActionResult Index()
         {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             return View(dbContext.Users);
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LoginResult(string login, string password)
+        {
+            var user = dbContext.Users.Single(u => u.Login == login);
+            if (user != null)
+            {
+                if (Tools.VerifyMd5Hash(password, user.Password) == true)
+                {
+                    Session["User"] = user;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
     }
 }
