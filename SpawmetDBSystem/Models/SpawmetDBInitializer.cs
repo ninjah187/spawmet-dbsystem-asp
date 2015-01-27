@@ -89,6 +89,33 @@ namespace SpawmetDBSystem.Models
             };
             clients.ForEach(c => context.Clients.Add(c));
             context.SaveChanges();
+
+            var machines = new List<Machine>();
+            for (int i = 0; i < 50; i++)
+            {
+                machines.Add(new Machine()
+                {
+                    Name = "Machine " + (i + 1).ToString(),
+                    Price = random.Next(100000).ToString(),
+                });
+            }
+            machines.ForEach(m => context.Machines.Add(m));
+            context.SaveChanges();
+
+            var orders = new List<Order>()
+            {
+                new Order()
+                {
+                    Client = context.Clients.Find(1),
+                    Machine = context.Machines.Find(20),
+                    Remarks = "Dodatkowe uwagi.",
+                    SendDate = new DateTime(2015, 1, 1),
+                    StartDate = DateTime.Now,
+                    Status = "Nowe",
+                },
+            };
+            orders.ForEach(o => context.Orders.Add(o));
+            context.SaveChanges();
         }
     }
 }

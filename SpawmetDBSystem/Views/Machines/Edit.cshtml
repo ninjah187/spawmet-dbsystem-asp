@@ -1,4 +1,4 @@
-﻿@model SpawmetDBSystem.Models.Part
+﻿@model SpawmetDBSystem.Models.Machine
 
 @{
     ViewBag.Title = "Edit";
@@ -30,10 +30,10 @@
 
 <div id="nav-bar-container">
     <button id="nav-bar-back-button" class="nav-bar-button"><</button>
-    <button id="nav-bar-title">Części - edytuj</button>
+    <button id="nav-bar-title">Maszyny - edytuj</button>
 </div>
 
-<form action="/Parts/EditResult/" method="POST" id="login-form">
+<form action="/Machines/EditResult/" method="POST" id="login-form">
     <div>
         <input readonly="true" type="text" name="id" value="@Model.ID" class="login-input login-input-blocked"/>
     </div>
@@ -41,7 +41,7 @@
         <input type="text" name="name" value="@Model.Name" class="login-input"/>
     </div>
     <div>
-        <input type="text" name="amount" value="@Model.Amount" class="login-input"/>
+        <input type="text" name="price" value="@Model.Price" class="login-input"/>
     </div>
     <input type="submit" value="ok" class="login-submit"/>
 </form>
@@ -49,7 +49,7 @@
 <script>
     $(document).ready(function() {
         $("#nav-bar-back-button").click(function() {
-            window.location = "/Parts/";
+            window.location = "/Machines/";
         });
 
         $(".login-input-blocked").click(function(event) {

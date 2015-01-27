@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-title">Maszyny - dodaj</button>
+</div>
+
+<form action="/Machines/Create/" method="POST" id="login-form">
+    <div>
+        <input type="text" name="name" value="Nazwa" class="login-input" id="Nazwa" />
+    </div>
+    <div>
+        <input type="text" name="price" value="Cena" class="login-input" id="Cena" />
+    </div>
+    <input type="submit" value="DODAJ" class="login-submit"/>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function() {
+            window.location = "/Machines/";
+        });
+
+        $(".login-input").css({
+            color: "#bbbbbb"
+        });
+
+        $(".login-input").focus(function () {
+            var val = $(this).attr("id");
+            if ($(this).attr("value") == val) {
+                $(this).attr("value", "");
+                $(this).css("color", "white");
+            }
+        });
+
+        $(".login-input").focusout(function() {
+            if ($(this).attr("value") == "") {
+                $(this).css("color", "#aaaaaa");
+                var val = $(this).attr("id");
+                $(this).attr("value", val);
+            }
+        });
+
+        /*$(".login-input").click(function() {
+            $(this).attr("value", "");
+            $(this).css("color", "white");
+        });*/
+    });
+</script>

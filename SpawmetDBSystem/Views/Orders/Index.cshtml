@@ -1,0 +1,144 @@
+﻿@model IEnumerable<SpawmetDBSystem.Models.Order>
+
+@{
+    ViewBag.Title = "Zamówienia";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-create-button" class="nav-bar-button">+</button>
+    <button id="nav-bar-delete-button" class="nav-bar-button">x</button>
+    <button id="nav-bar-edit-button" class="nav-bar-button">e</button>
+    <button id="nav-bar-title">Zamówienia</button>
+</div>
+
+<table class="db-table">
+    <tr class="db-table-header">
+        <td class="db-table-header-name">Klient</td>
+        <td class="db-table-header-name">Maszyna</td>
+        <td class="db-table-header-name">Status</td>
+        <td class="db-table-header-name">Data dodania</td>
+        <td class="db-table-header-name">Data wysyłki</td>
+        <td class="db-table-header-name">Uwagi</td>
+    </tr>
+    @{
+        int i = 0;
+        foreach (var order in Model)
+        {
+            string colorClassName = (i++%2) == 0 ? "db-table-bright" : "db-table-dark";
+            <tr class="db-table-column @colorClassName" id="@order.ID">
+                <td class="db-table-record">@Html.DisplayFor(p => order.Client.Name)</td>
+                <td class="db-table-record">@Html.DisplayFor(p => order.Machine.Name)</td>
+                <td class="db-table-record">@Html.DisplayFor(p => order.Status)</td>
+                @{
+                    string startDate = order.StartDate.ToString();
+                    string sendDate = order.SendDate.ToString();
+                }
+                <td class="db-table-record">@Html.DisplayFor(p => startDate)</td>
+                <td class="db-table-record">@Html.DisplayFor(p => sendDate)</td>
+                <td class="db-table-record">@Html.DisplayFor(p => order.Remarks)</td>
+            </tr>
+        }
+    }
+</table>
+
+<script>
+    function generateDeleteString(selectedIds) {
+        var deleteString = "";
+        for (var i = 0; i < selectedIds.length; i++) {
+            deleteString += selectedIds[i] + ",";
+        }
+        return deleteString;
+    }
+
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function() {
+            window.location = "/Home/";
+        });
+
+        $("#nav-bar-create-button").click(function () {
+            window.location = "/Orders/Create/";
+        });
+
+        $("#nav-bar-delete-button").click(function() {
+            var deleteString = generateDeleteString(selectedIds);
+            window.location = "/Orders/Delete?deleteString=" + deleteString;
+        });
+        $("#nav-bar-delete-button").css("display", "none");
+
+        $("#nav-bar-edit-button").click(function() {
+            window.location = "/Orders/Edit?id=" + selectedIds[0];
+        });
+        $("#nav-bar-edit-button").css("display", "none");
+
+        $(".db-table-column").on("mouseover", function () {
+            if ($(this).hasClass("db-table-column-selected")) {
+                return;
+            }
+            $(this).css("background-color", "#515151");
+        });
+
+        $(".db-table-column").on("mouseout", function () {
+            if ($(this).hasClass("db-table-column-selected")) {
+                return;
+            }
+            var bgColor = $(this).index() % 2 == 0 ? "#414141" : "#313131";
+            $(this).css("background-color", bgColor);
+        });
+        
+        $(".db-table-column").each(function (index) {
+            if (index % 2 == 0) {
+                $(this).css("background-color", "#313131");
+            } else {
+                $(this).css("background-color", "#414141");
+            }
+        });
+
+        var selectedIds = [];
+
+        $(".db-table-column").click(function (event) {
+            event.preventDefault();
+            if (event.altKey) {
+                if ($(this).hasClass("db-table-column-selected") == false) {
+                    $(this).addClass("db-table-column-selected");
+                    $(this).css({
+                        color: "black",
+                        backgroundColor: "white",
+                    });
+                    var id = $(this).attr("id");
+                    selectedIds.push(id);
+                } else {
+                    $(this).removeClass("db-table-column-selected");
+                    var bgColor = $(this).index() % 2 == 0 ? "#414141" : "#313131";
+                    $(this).css({
+                        color: "white",
+                        backgroundColor: bgColor,
+                    });
+                    var id = $(this).attr("id");
+                    var index = selectedIds.indexOf(id);
+                    if (index < 0) {
+                        alert("ERROR");
+                    }
+                    selectedIds.splice(index, 1);
+                    //var id = $(this).attr("id");
+                    //selectedIds.remove(id);
+                    //selectedIds.remove($(this).attr("id"));
+                }
+
+                var numSelected = $(".db-table-column-selected").length;
+                if (numSelected == 0) {
+                    $("#nav-bar-delete-button").css("display", "none");
+                    $("#nav-bar-edit-button").css("display", "none");
+                } else if (numSelected == 1) {
+                    $("#nav-bar-delete-button").css("display", "block");
+                    $("#nav-bar-edit-button").css("display", "block");
+                } else {
+                    $("#nav-bar-delete-button").css("display", "block");
+                    $("#nav-bar-edit-button").css("display", "none");
+                }
+            }
+        });
+
+    });
+</script>

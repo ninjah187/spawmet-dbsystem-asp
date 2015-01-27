@@ -41,5 +41,15 @@ namespace SpawmetDBSystem
                 return false;
             }
         }
+
+        public static DateTime ToDateTime(this string s)
+        {
+            string[] date = s.Split('-');
+            int year = int.Parse(date[0]);
+            int month = int.Parse(date[1]);
+            int day = int.Parse(date[2]);
+
+            return new DateTime(year, month, day);
+        }
     }
 }

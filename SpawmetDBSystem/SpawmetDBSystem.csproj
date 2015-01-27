@@ -116,12 +116,17 @@
   <ItemGroup>
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MachinesController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Machine.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderArgs.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\SpawmetDBContext.cs" />
     <Compile Include="Models\SpawmetDBInitializer.cs" />
@@ -161,6 +166,12 @@
     <Content Include="Views\Clients\Create.cshtml" />
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
+    <Content Include="Views\Machines\Index.cshtml" />
+    <Content Include="Views\Machines\Create.cshtml" />
+    <Content Include="Views\Machines\Delete.cshtml" />
+    <Content Include="Views\Machines\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

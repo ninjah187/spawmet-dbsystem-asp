@@ -1,0 +1,76 @@
+﻿@using SpawmetDBSystem.Models
+@model SpawmetDBSystem.Models.OrderArgs
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-title">Zamówienia - dodaj</button>
+</div>
+
+<form action="/Orders/Create/" method="POST" id="login-form">
+    <div>
+        <!--<input type="text" name="clientName" value="" class="login-input" id="Nazwa"/>-->
+        <select name="clientName" class="form-select">
+            @foreach (var client in Model.Clients)
+            {
+                <option class="form-option">@client.Name</option>
+            }
+        </select>
+        <select name="machineName" class="form-select">
+            @foreach (var machine in Model.Machines)
+            {
+                <option class="form-option">@machine.Name</option>
+            }
+        </select>
+    </div>
+    <div>
+        <input type="text" name="status" value="Status" class="login-input" id="Status"/>
+    </div>
+    <div>
+        <input type="text" name="startDate" value="Data dodania" class="login-input" id="Data dodania"/>
+    </div>
+    <div>
+        <input type="text" name="sendDate" value="Data wysyłki" class="login-input" id="Data wysyłki"/>
+    </div>
+    <div>
+        <input type="text" name="remarks" value="Uwagi" class="login-input" id="Uwagi" />
+    </div>
+    <input type="submit" value="DODAJ" class="login-submit"/>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function() {
+            window.location = "/Orders/";
+        });
+
+        $(".login-input").css({
+            color: "#bbbbbb"
+        });
+
+        $(".login-input").focus(function () {
+            var val = $(this).attr("id");
+            if ($(this).attr("value") == val) {
+                $(this).attr("value", "");
+                $(this).css("color", "white");
+            }
+        });
+
+        $(".login-input").focusout(function() {
+            if ($(this).attr("value") == "") {
+                $(this).css("color", "#aaaaaa");
+                var val = $(this).attr("id");
+                $(this).attr("value", val);
+            }
+        });
+
+        /*$(".login-input").click(function() {
+            $(this).attr("value", "");
+            $(this).css("color", "white");
+        });*/
+    });
+</script>
