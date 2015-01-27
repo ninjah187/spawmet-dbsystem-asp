@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +7,7 @@ using SpawmetDBSystem.Models;
 
 namespace SpawmetDBSystem.Controllers
 {
-    public class PartsController : Controller
+    public class ClientsController : Controller
     {
         private SpawmetDBContext dbContext = new SpawmetDBContext();
 
@@ -18,7 +17,7 @@ namespace SpawmetDBSystem.Controllers
             {
                 return RedirectToAction("Login", "Users");
             }
-            return View(dbContext.Parts);
+            return View(dbContext.Clients);
         }
 
         public ActionResult Create()
@@ -27,32 +26,31 @@ namespace SpawmetDBSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string name, string amount)
+        public ActionResult Create(string name, string city, string phone, string email, string nip,
+                                    string province, string address, string postalCode)
         {
-            Part part;
+            Client client;
             try
             {
-                part = dbContext.Parts.Single(p => p.Name == name);
+                client = dbContext.Clients.Single(c => c.Name == name);
             }
             catch (InvalidOperationException exception)
             {
-                int _amount;
-                if (int.TryParse(amount, out _amount) == true)
+                client = new Client()
                 {
-                    part = new Part()
-                    {
-                        Name = name,
-                        Amount = _amount,
-                    };
-                    dbContext.Parts.Add(part);
-                    dbContext.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    
-                }
-                
+                    Address = address,
+                    City = city,
+                    Email = email,
+                    Name = name,
+                    Nip = nip,
+                    Phone = phone,
+                    PostalCode = postalCode,
+                    Province = province,
+                };
+
+                dbContext.Clients.Add(client);
+                dbContext.SaveChanges();
+                return RedirectToAction("Index");
             }
             throw new InvalidOperationException("There is element with such name in database.");
         }
@@ -60,22 +58,22 @@ namespace SpawmetDBSystem.Controllers
         public ActionResult Delete(string deleteString)
         {
             string[] deleteIds = deleteString.Split(',');
-            var deleteParts = new List<Part>();
+            var deleteClients = new List<Client>();
             for (int i = 0; i < deleteIds.Length; i++)
             {
                 //int id = int.Parse(deleteIds[i]);
                 int id;
                 if (int.TryParse(deleteIds[i], out id))
                 {
-                    var deletePart = dbContext.Parts.Single(p => p.ID == id);
-                    deleteParts.Add(deletePart);
+                    var deleteClient = dbContext.Clients.Single(c => c.ID == id);
+                    deleteClients.Add(deleteClient);
                 }
                 else
                 {
-                    
+
                 }
             }
-            return View(deleteParts);
+            return View(deleteClients);
         }
 
         public ActionResult DeleteResult(string deleteString)
@@ -86,8 +84,8 @@ namespace SpawmetDBSystem.Controllers
                 int id;
                 if (int.TryParse(deleteIds[i], out id))
                 {
-                    var deletePart = dbContext.Parts.Single(p => p.ID == id);
-                    dbContext.Parts.Remove(deletePart);
+                    var deleteClient = dbContext.Clients.Single(p => p.ID == id);
+                    dbContext.Clients.Remove(deleteClient);
                 }
                 else
                 {
@@ -100,16 +98,23 @@ namespace SpawmetDBSystem.Controllers
 
         public ActionResult Edit(int id)
         {
-            var part = dbContext.Parts.Single(p => p.ID == id);
-            return View(part);
+            var client = dbContext.Clients.Single(p => p.ID == id);
+            return View(client);
         }
 
-        public ActionResult EditResult(int id, string name, string amount)
+        public ActionResult EditResult(int id, string name, string city, string phone, string email, string nip,
+                                    string province, string address, string postalCode)
         {
             //TODO: check uniqueness of login
-            var part = dbContext.Parts.Single(p => p.ID == id);
-            part.Name = name;
-            part.Amount = int.Parse(amount);
+            var client = dbContext.Clients.Single(p => p.ID == id);
+            client.Name = name;
+            client.City = city;
+            client.Phone = phone;
+            client.Email = email;
+            client.Nip = nip;
+            client.Province = province;
+            client.Address = address;
+            client.PostalCode = postalCode;
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

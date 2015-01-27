@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-title">Klienci - dodaj</button>
+</div>
+
+<form action="/Clients/Create/" method="POST" id="login-form">
+    <div>
+        <input type="text" name="name" value="Nazwa" class="login-input" id="Nazwa" />
+    </div>
+    <div>
+        <input type="text" name="city" value="Miasto" class="login-input" id="Miasto"/>
+    </div>
+    <div>
+        <input type="text" name="phone" value="Telefon" class="login-input" id="Telefon"/>
+    </div>
+    <div>
+        <input type="text" name="email" value="Email" class="login-input" id="Email"/>
+    </div>
+    <div>
+        <input type="text" name="nip" value="NIP" class="login-input" id="NIP"/>
+    </div>
+    <div>
+        <input type="text" name="province" value="Województwo" class="login-input" id="Województwo"/>
+    </div>
+    <div>
+        <input type="text" name="address" value="Ulica" class="login-input" id="Ulica"/>
+    </div>
+    <div>
+        <input type="text" name="postalCode" value="Kod pocztowy" class="login-input" id="Kod pocztowy" />
+    </div>
+    <input type="submit" value="DODAJ" class="login-submit"/>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function() {
+            window.location = "/Clients/";
+        });
+
+        $(".login-input").css({
+            color: "#bbbbbb"
+        });
+
+        $(".login-input").focus(function () {
+            var val = $(this).attr("id");
+            if ($(this).attr("value") == val) {
+                $(this).attr("value", "");
+                $(this).css("color", "white");
+            }
+        });
+
+        $(".login-input").focusout(function() {
+            if ($(this).attr("value") == "") {
+                $(this).css("color", "#aaaaaa");
+                var val = $(this).attr("id");
+                $(this).attr("value", val);
+            }
+        });
+
+        /*$(".login-input").click(function() {
+            $(this).attr("value", "");
+            $(this).css("color", "white");
+        });*/
+    });
+</script>

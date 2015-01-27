@@ -17,5 +17,6 @@ namespace SpawmetDBSystem.Models
         public DbSet<User> Users { get; set; }
 
         public DbSet<Part> Parts { get; set; }
+        public DbSet<Client> Clients { get; set; }
     }
 }

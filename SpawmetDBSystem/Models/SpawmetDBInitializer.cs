@@ -61,6 +61,34 @@ namespace SpawmetDBSystem.Models
             }
             parts.ForEach(p => context.Parts.Add(p));
             context.SaveChanges();
+
+            var clients = new List<Client>()
+            {
+                new Client()
+                {
+                    Address = "Bojowników o wolność i demokracje 15",
+                    City = "Sępólno",
+                    Email = "wojcik.ernest@o2.pl",
+                    Name = "Agro pomorze",
+                    Nip = "",
+                    Phone = "500216719",
+                    PostalCode = "26-330 Żarnów",
+                    Province = "Wielkopolskie",
+                },
+                new Client()
+                {
+                    Address = "Targowa 9",
+                    City = "Gorzów Wlkp.",
+                    Email = "m.placzek@euro-broker.pl",
+                    Name = "EURO-BROKER",
+                    Nip = "",
+                    Phone = "784045855, 734128072",
+                    PostalCode = "66-400",
+                    Province = "Lubuskie",
+                },
+            };
+            clients.ForEach(c => context.Clients.Add(c));
+            context.SaveChanges();
         }
     }
 }
