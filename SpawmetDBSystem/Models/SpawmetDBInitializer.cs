@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.EnterpriseServices;
 
 namespace SpawmetDBSystem.Models
 {
     public class SpawmetDBInitializer : DropCreateDatabaseAlways<SpawmetDBContext>
     {
+        private static readonly Random random = new Random();
+
         protected override void Seed(SpawmetDBContext context)
         {
             var userGroups = new List<UserGroup>()
@@ -45,6 +48,18 @@ namespace SpawmetDBSystem.Models
                 });
             }
             users.ForEach(u => context.Users.Add(u));
+            context.SaveChanges();
+
+            var parts = new List<Part>();
+            for (int i = 0; i < 55; i++)
+            {
+                parts.Add(new Part()
+                {
+                    Name = "part" + (i + 1).ToString(),
+                    Amount = random.Next(1001),
+                });
+            }
+            parts.ForEach(p => context.Parts.Add(p));
             context.SaveChanges();
         }
     }

@@ -1,37 +1,27 @@
-﻿@model List<SpawmetDBSystem.Models.UserGroup>
-
-@{
-    Layout = "/Views/Layouts/Plain.cshtml";
-    ViewBag.Title = "Dodaj użytkownika";
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layouts/Plain.cshtml";
 }
 
 <div id="nav-bar-container">
     <button id="nav-bar-back-button" class="nav-bar-button"><</button>
-    <button id="nav-bar-title">Użytkownicy - dodaj</button>
+    <button id="nav-bar-title">Części - dodaj</button>
 </div>
 
-<form action="/Users/Create/" method="POST" id="login-form">
+<form action="/Parts/Create/" method="POST" id="login-form">
     <div>
-        <input type="text" name="login" value="Login" class="login-input"/>
+        <input type="text" name="name" value="Nazwa" class="login-input" id="Nazwa" />
     </div>
     <div>
-        <input type="text" name="password" value="Hasło" class="login-input"/>
+        <input type="text" name="amount" value="Ilość" class="login-input" id="Ilość" />
     </div>
-    <div>
-        <select name="groupName" class="form-select">
-            @foreach (var userGroup in Model)
-            {
-                <option class="form-option">@userGroup.Name</option>
-            }
-        </select>
-    </div>
-    <input type="submit" value="DODAJ" class="login-submit" />
+    <input type="submit" value="DODAJ" class="login-submit"/>
 </form>
 
 <script>
     $(document).ready(function() {
         $("#nav-bar-back-button").click(function() {
-            window.location = "/Users/";
+            window.location = "/Parts/";
         });
 
         $(".login-input").css({
@@ -46,12 +36,17 @@
             }
         });
 
-        $(".login-input").focusout(function () {
+        $(".login-input").focusout(function() {
             if ($(this).attr("value") == "") {
                 $(this).css("color", "#aaaaaa");
                 var val = $(this).attr("id");
                 $(this).attr("value", val);
             }
         });
+
+        /*$(".login-input").click(function() {
+            $(this).attr("value", "");
+            $(this).css("color", "white");
+        });*/
     });
 </script>

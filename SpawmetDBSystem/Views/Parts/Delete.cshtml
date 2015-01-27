@@ -1,0 +1,80 @@
+﻿@model List<SpawmetDBSystem.Models.Part>
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Layouts/Plain.cshtml";
+}
+
+<div id="nav-bar-container">
+    <button id="nav-bar-back-button" class="nav-bar-button"><</button>
+    <button id="nav-bar-accept-button" class="nav-bar-button">ok</button>
+    <button id="nav-bar-title">Użytkownicy - usuń</button>
+</div>
+
+<table class="db-table">
+    <tr class="db-table-header">
+        <td class="db-table-header-name">Część</td>
+        <td class="db-table-header-name">Ilość</td>
+    </tr>
+    @{
+        int i = 0;
+        foreach (var part in Model)
+        {
+            string colorClassName = (i++%2) == 0 ? "db-table-bright" : "db-table-dark";
+            <tr class="db-table-column @colorClassName" id="@part.ID">
+                <td class="db-table-record">@Html.DisplayFor(p => part.Name)</td>
+                <td class="db-table-record">@Html.DisplayFor(p => part.Amount)</td>
+            </tr>
+        }
+    }
+</table>
+
+<script>
+    function generateDeleteString(selectedIds) {
+        var deleteString = "";
+        for (var i = 0; i < selectedIds.length; i++) {
+            deleteString += selectedIds[i] + ",";
+        }
+        return deleteString;
+    }
+
+    var ids = [];
+
+    $(document).ready(function() {
+        $("#nav-bar-back-button").click(function() {
+            window.location = "/Parts/";
+        });
+
+        $("#nav-bar-accept-button").click(function() {
+            $(".db-table-column").each(function() {
+                var id = $(this).attr("id");
+                ids.push(id);
+            });
+            var deleteString = generateDeleteString(ids);
+            window.location = "/Parts/DeleteResult?deleteString=" + deleteString;
+        });
+    });
+
+    $(".db-table-column").on("mouseover", function () {
+        if ($(this).hasClass("db-table-column-selected")) {
+            return;
+        }
+        $(this).css("background-color", "#515151");
+    });
+
+    $(".db-table-column").on("mouseout", function () {
+        if ($(this).hasClass("db-table-column-selected")) {
+            return;
+        }
+        var bgColor = $(this).index() % 2 == 0 ? "#414141" : "#313131";
+        $(this).css("background-color", bgColor);
+    });
+
+    $(".db-table-column").each(function (index) {
+        if (index % 2 == 0) {
+            $(this).css("background-color", "#313131");
+        } else {
+            $(this).css("background-color", "#414141");
+        }
+    });
+</script>
