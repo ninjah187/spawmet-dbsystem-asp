@@ -108,12 +108,57 @@ namespace SpawmetDBSystem.Controllers
             var deleteUsers = new List<User>();
             for (int i = 0; i < deleteIds.Length; i++)
             {
-                var deleteUser = dbContext.Users.Single(u => u.ID == Int32.Parse(deleteIds[i]));
-                deleteUsers.Add(deleteUser);
+                //int id = int.Parse(deleteIds[i]);
+                int id;
+                if (int.TryParse(deleteIds[i], out id))
+                {
+                    var deleteUser = dbContext.Users.Single(u => u.ID == id);
+                    deleteUsers.Add(deleteUser);
+                }
+                else
+                {
+                    //throw new InvalidOperationException("Błąd w parsowaniu.");
+                }
             }
             return View(deleteUsers);
         }
 
+        public ActionResult DeleteResult(string deleteString)
+        {
+            string[] deleteIds = deleteString.Split(',');
+            for (int i = 0; i < deleteIds.Length; i++)
+            {
+                int id;
+                if (int.TryParse(deleteIds[i], out id))
+                {
+                    var deleteUser = dbContext.Users.Single(u => u.ID == id);
+                    dbContext.Users.Remove(deleteUser);
+                }
+                else
+                {
+                    //throw new InvalidOperationException("Błąd w parsowaniu.");
+                }
+            }
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var user = dbContext.Users.Single(u => u.ID == id);
+            return View(user);
+        }
+
+        public ActionResult EditResult(int id, string login, string password, string groupName)
+        {
+            //TODO: check uniqueness of login
+            var user = dbContext.Users.Single(u => u.ID == id);
+            user.Login = login;
+            user.Password = Tools.GetMd5Hash(password);
+            user.UserGroup = dbContext.UserGroups.Single(ug => ug.Name == groupName);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 
     public class UserAlreadyExistsException : Exception

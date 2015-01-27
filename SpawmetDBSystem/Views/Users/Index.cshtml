@@ -64,7 +64,7 @@
         $("#nav-bar-delete-button").css("display", "none");
 
         $("#nav-bar-edit-button").click(function() {
-
+            window.location = "/Users/Edit?id=" + selectedIds[0];
         });
         $("#nav-bar-edit-button").css("display", "none");
 
@@ -93,59 +93,48 @@
 
         var selectedIds = [];
 
-        $(".db-table-column").click(function() {
-            if ($(this).hasClass("db-table-column-selected") == false) {
-                $(this).addClass("db-table-column-selected");
-                $(this).css({
-                    color: "black",
-                    backgroundColor: "white",
-                });
-                var id = $(this).attr("id");
-                selectedIds.push(id);
-            } else {
-                $(this).removeClass("db-table-column-selected");
-                var bgColor = $(this).index() % 2 == 0 ? "#414141" : "#313131";
-                $(this).css({
-                    color: "white",
-                    backgroundColor: bgColor,
-                });
-                var id = $(this).attr("id");
-                var index = selectedIds.indexOf(id);
-                if (index < 0) {
-                    alert("ERROR");
+        $(".db-table-column").click(function (event) {
+            event.preventDefault();
+            if (event.altKey) {
+                if ($(this).hasClass("db-table-column-selected") == false) {
+                    $(this).addClass("db-table-column-selected");
+                    $(this).css({
+                        color: "black",
+                        backgroundColor: "white",
+                    });
+                    var id = $(this).attr("id");
+                    selectedIds.push(id);
+                } else {
+                    $(this).removeClass("db-table-column-selected");
+                    var bgColor = $(this).index() % 2 == 0 ? "#414141" : "#313131";
+                    $(this).css({
+                        color: "white",
+                        backgroundColor: bgColor,
+                    });
+                    var id = $(this).attr("id");
+                    var index = selectedIds.indexOf(id);
+                    if (index < 0) {
+                        alert("ERROR");
+                    }
+                    selectedIds.splice(index, 1);
+                    //var id = $(this).attr("id");
+                    //selectedIds.remove(id);
+                    //selectedIds.remove($(this).attr("id"));
                 }
-                selectedIds.splice(index, 1);
-                //var id = $(this).attr("id");
-                //selectedIds.remove(id);
-                //selectedIds.remove($(this).attr("id"));
-            }
 
-            var numSelected = $(".db-table-column-selected").length;
-            if (numSelected == 0) {
-                $("#nav-bar-delete-button").css("display", "none");
-                $("#nav-bar-edit-button").css("display", "none");
-            } else if (numSelected == 1) {
-                $("#nav-bar-delete-button").css("display", "block");
-                $("#nav-bar-edit-button").css("display", "block");
-            } else {
-                $("#nav-bar-delete-button").css("display", "block");
-                $("#nav-bar-edit-button").css("display", "none");
-            }
-            /*alert(numSelected);
-            switch(numSelected) {
-                case "0":
-                {
+                var numSelected = $(".db-table-column-selected").length;
+                if (numSelected == 0) {
                     $("#nav-bar-delete-button").css("display", "none");
-                } break;
-                case "1":
-                {
+                    $("#nav-bar-edit-button").css("display", "none");
+                } else if (numSelected == 1) {
                     $("#nav-bar-delete-button").css("display", "block");
-                } break;
-                default:
-                {
+                    $("#nav-bar-edit-button").css("display", "block");
+                } else {
                     $("#nav-bar-delete-button").css("display", "block");
-                } break;
-            }*/
+                    $("#nav-bar-edit-button").css("display", "none");
+                }
+            }
         });
+
     });
 </script>
