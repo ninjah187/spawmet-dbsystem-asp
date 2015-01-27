@@ -22,3 +22,4 @@ D:\Pisane\C#\SpawmetDBSystem\SpawmetDBSystem\bin\EntityFramework.dll
 D:\Pisane\C#\SpawmetDBSystem\SpawmetDBSystem\bin\EntityFramework.SqlServer.dll
 D:\Pisane\C#\SpawmetDBSystem\SpawmetDBSystem\bin\EntityFramework.xml
 D:\Pisane\C#\SpawmetDBSystem\SpawmetDBSystem\bin\EntityFramework.SqlServer.xml
+D:\Pisane\C#\SpawmetDBSystem\SpawmetDBSystem\obj\Debug\SpawmetDBSystem.csprojResolveAssemblyReference.cache

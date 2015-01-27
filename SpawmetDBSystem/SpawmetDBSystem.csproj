@@ -147,6 +147,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
